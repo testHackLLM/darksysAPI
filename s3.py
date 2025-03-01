@@ -48,7 +48,7 @@ def read_file_from_s3(file_key):
     return file_content
 
 def get_data_from_s3(file_name, query, returnType: ReturnDataType):
-    print(returnType)
+    # print(returnType)
     response_from_s3 = []
 
     if not isKeyExist(file_name):
@@ -66,7 +66,7 @@ def get_data_from_s3(file_name, query, returnType: ReturnDataType):
     for event in resp['Payload']:
         if 'Records' in event:
             raw_data = event["Records"]["Payload"].decode("utf-8")
-            print("Raw Data from S3:\n", raw_data)  
+            # print("Raw Data from S3:\n", raw_data)  
             json_records = convert_record_to_json(raw_data)  
             response_from_s3.extend(json_records)  
         elif 'Stats' in event:

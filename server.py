@@ -30,7 +30,7 @@ async def read_root(login_id: str, lob: str = Header(None)):  # ✅ Correct way 
     
     print(file_name, query)
     
-    response = get_data_from_s3(file_name=file_name, query=query, returnType=ReturnDataType.OBJECT)
+    response = get_data_from_s3(file_name=file_name, query=query, returnType=ReturnDataType.ARRAY)
 
     print(response)
     
