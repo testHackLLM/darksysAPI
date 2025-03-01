@@ -8,7 +8,7 @@ fastapi==0.115.9
 h11==0.14.0
 idna==3.10
 jmespath==1.0.1
-numpy==2.2.3
+numpy==1.26.4
 pandas==2.2.3
 pydantic==2.10.6
 pydantic_core==2.27.2
