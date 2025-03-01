@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Header
+from fastapi.middleware.cors import CORSMiddleware  # 🆕 Import CORS Middleware
 from getData import get_file_name, get_query, get_query_all, convert_record_to_json
 import globals
 from s3 import get_data_from_s3, isKeyExist, save_to_s3, getDfFromS3
@@ -7,6 +8,14 @@ import pandas as pd
 import json
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 👈 Sabhi origins allow honge (Security ke liye specific origin de sakte ho)
+    allow_credentials=True,
+    allow_methods=["*"],  # 👈 Sabhi HTTP methods allow honge (GET, POST, PUT, DELETE)
+    allow_headers=["*"],  # 👈 Sabhi headers allow honge
+)
 
 @app.get("/api/q1/{login_id}")
 async def read_root(login_id: str, lob: str = Header(None)):  # ✅ Correct way to get header
@@ -58,7 +67,7 @@ async def post_answers(body:QABody, lob: str = Header(None)):
     payload_json = json.dumps([entry.dict() for entry in body.payload], ensure_ascii=False)
     # print(body)
     if(isKeyExist(file_name)):
-        
+
         df = getDfFromS3(file_name, 0, 0, 0, False)
         existing_row_index = df[(df["loginid"] == body.loginid) & (df["outletcode"] == body.outletcode)].index
 
